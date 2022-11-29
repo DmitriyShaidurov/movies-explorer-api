@@ -59,34 +59,11 @@ app.use((req, res, next) => {
   return next();
 });
 
-const { PORT = 3001, MONGO_URL = 'mongodb://localhost:27017/mestodb' } = process.env;
+const { PORT = 3001, MONGO_URL = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
 
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
 });
-
-/* const settingCors = {
-  origin: [
-    'http://dmitriy47.students.nomoredomains.icu:3000/',
-    'https://dmitriy47.students.nomoredomains.icu:3000/',
-    'http://dmitriy47.students.nomoredomains.icu:3001/',
-    'https://dmitriy47.students.nomoredomains.icu:3001/',
-    'http://158.160.41.215:3001',
-    'http://158.160.41.215:3000',
-    'https://158.160.41.215:3001',
-    'https://158.160.41.215:3000',
-    'localhost:3000',
-    'localhost:3000',
-  ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
-  credentials: true,
-};
-app.use('*', cors(settingCors)); */
-
-// app.use(cors());
 
 const validateUserSignup = celebrate({
   body: Joi.object().keys({
