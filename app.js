@@ -1,17 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('node:path');
-const { celebrate, Joi } = require('celebrate');
 const cors = require('cors');
 const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const routesUser = require('./routes/users');
-const routesCard = require('./routes/cards');
-const { createUser, login } = require('./controllers/users');
-const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/notFoundErr');
+const router = require('./routes/index');
 
 const app = express();
 
@@ -65,39 +61,15 @@ mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
 });
 
-const validateUserSignup = celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().regex(
-      /^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$/,
-    ),
-  }),
-});
-const validateSignin = celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-});
-
 app.use(cookieParser());
 app.use(requestLogger);
-//
+
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
-//
-app.post('/signin', validateSignin, login);
-app.post('/signup', validateUserSignup, createUser);
-app.use(auth);
-
-app.use('/', routesUser);
-app.use('/', routesCard);
+app.use(router);//
 app.use((req, res, next) => {
   next(new NotFoundError('Страница не найдена'));
 });
