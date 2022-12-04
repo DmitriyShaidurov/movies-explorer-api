@@ -18,14 +18,6 @@ app.use(cors());
 app.use(express.json());
 
 const allowedCors = [
-  'http://dmitriy47.students.nomoredomains.icu:3000/',
-  'https://dmitriy47.students.nomoredomains.icu:3000/',
-  'http://dmitriy47.students.nomoredomains.icu:3001/',
-  'https://dmitriy47.students.nomoredomains.icu:3001/',
-  'http://158.160.41.215:3001',
-  'http://158.160.41.215:3000',
-  'https://158.160.41.215:3001',
-  'https://158.160.41.215:3000',
   'http://localhost:3000',
   'https://localhost:3000',
   'localhost:3000',
@@ -34,6 +26,8 @@ const allowedCors = [
   'https://localhost:3001',
   'localhost:3001',
   'localhost:3001',
+  'https://api.dmitriysh.nomoredomains.club/',
+  'http://api.dmitriysh.nomoredomains.club/',
 ];
 
 app.use((req, res, next) => {
