@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundError = require('./errors/notFoundErr');
 const router = require('./routes/index');
+const { MONGO_URL, allowedCors } = require('./utils/const');
 
 const app = express();
 
@@ -16,19 +17,6 @@ app.use(express.json());
 app.use(cors());
 
 app.use(express.json());
-
-const allowedCors = [
-  'http://localhost:3000',
-  'https://localhost:3000',
-  'localhost:3000',
-  'localhost:3000',
-  'http://localhost:3001',
-  'https://localhost:3001',
-  'localhost:3001',
-  'localhost:3001',
-  'https://api.dmitriysh.nomoredomains.club/',
-  'http://api.dmitriysh.nomoredomains.club/',
-];
 
 app.use((req, res, next) => {
   const { origin } = req.headers;
@@ -49,7 +37,7 @@ app.use((req, res, next) => {
   return next();
 });
 
-const { PORT = 3001, MONGO_URL = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
+const { PORT = 3001 } = process.env;
 
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
