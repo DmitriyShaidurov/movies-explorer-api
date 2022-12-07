@@ -22,7 +22,6 @@ const validationMovie = celebrate({
 });
 
 router.get('/movies', getMovie);
-
 router.post('/movies', validationMovie, createMovie);
 
 router.delete('/movies/:movieId', celebrate({

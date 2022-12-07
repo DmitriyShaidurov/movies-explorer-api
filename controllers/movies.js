@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const BadRequestError = require('../errors/badRequestErr');
 const NotFoundError = require('../errors/notFoundErr');
 const NoAccessErr = require('../errors/noAccessErr');
+
 const Movie = require('../models/movie');
 
 const getMovie = async (req, res, next) => {

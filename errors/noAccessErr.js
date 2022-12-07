@@ -4,5 +4,4 @@ class NoAccessErr extends Error {
     this.statusCode = 403;
   }
 }
-
 module.exports = NoAccessErr;

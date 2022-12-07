@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 const NotFoundError = require('../errors/notFoundErr');
 const BadRequestError = require('../errors/badRequestErr');
-
 const AlreadyRegisterError = require('../errors/alreadyRegisterErr');
 
 const getUser = (req, res, next) => {

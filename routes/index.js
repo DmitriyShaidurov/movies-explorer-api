@@ -3,6 +3,7 @@ const { celebrate, Joi } = require('celebrate');
 const routesUser = require('./users');
 const routesMovie = require('./movies');
 const auth = require('../middlewares/auth');
+
 const { createUser, login } = require('../controllers/users');
 
 const validateUserSignup = celebrate({
