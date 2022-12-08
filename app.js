@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const path = require('node:path');
+// const path = require('node:path');
 const cors = require('cors');
 const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
@@ -17,8 +17,6 @@ const app = express();
 app.use(express.json());
 
 app.use(cors());
-
-app.use(express.json());
 
 app.use((req, res, next) => {
   const { origin } = req.headers;
@@ -54,7 +52,7 @@ app.use((req, res, next) => {
 });
 
 app.use(errorLogger);
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 app.use(errors());
 
 app.use((err, req, res, next) => {

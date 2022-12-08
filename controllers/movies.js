@@ -16,19 +16,14 @@ const getMovie = async (req, res, next) => {
 const deleteMovie = (req, res, next) => {
   const { movieId } = req.params;
   const owner = req.user._id;
-  Movie.findById(movieId).orFail(new NotFoundError('Видео с указанным _id не найдено.'))
+  Movie.findById(movieId)
+    .orFail(new NotFoundError('Видео с указанным _id не найдено.'))
     .then((movie) => {
-      if (!(movie.owner._id.toString() === owner)) {
-        throw new NoAccessErr('Нет прав на удаление видео');
+      if (movie.owner.toString() === owner.toString()) {
+        return movie.remove()
+          .then(() => res.status(200).send({ message: 'Фильм удалён' }));
       }
-      Movie.findByIdAndRemove(movieId)
-        .then((movieDel) => {
-          if (movieDel) {
-            res.status(200).send(movieDel);
-          } else {
-            throw NotFoundError('Видео с указанным _id не найдено.');
-          }
-        });
+      throw new NoAccessErr('Нет прав на удаление видео');
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {

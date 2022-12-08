@@ -22,7 +22,6 @@ const userSchema = new Schema({
   },
   name: {
     type: String,
-    default: 'Жак-Ив Кусто',
     minlength: 2,
     maxlength: 30,
   },
