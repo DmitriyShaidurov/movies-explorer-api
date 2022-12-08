@@ -11,7 +11,7 @@ const allowedCors = [
   'http://api.dmitriysh.nomoredomains.club/',
 ];
 
-const MONGO_URL = 'mongodb://localhost:27017/bitfilmsdb';
+const MONGO_URL = 'mongodb://localhost:27017/moviesdb';
 
 module.exports = {
   allowedCors,
