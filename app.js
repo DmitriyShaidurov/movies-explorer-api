@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundError = require('./errors/notFoundErr');
 const router = require('./routes/index');
-// const limiter = require('./utils/limiter');
+const { limiter } = require('./utils/limiter');
 
 const { NODE_ENV, MONGO_URL_PROD } = process.env;
 const { MONGO_URL, allowedCors } = require('./utils/const');
@@ -46,7 +46,7 @@ mongoose.connect(NODE_ENV !== 'production' ? MONGO_URL : MONGO_URL_PROD, {
 
 app.use(cookieParser());
 app.use(requestLogger);
-// app.use(limiter);
+app.use(limiter);
 
 app.use(router);
 app.use((req, res, next) => {
