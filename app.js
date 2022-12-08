@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundError = require('./errors/notFoundErr');
 const router = require('./routes/index');
+
+const { NODE_ENV, MONGO_URL_PROD } = process.env;
 const { MONGO_URL, allowedCors } = require('./utils/const');
 
 const app = express();
@@ -37,7 +39,7 @@ app.use((req, res, next) => {
 
 const { PORT = 3001 } = process.env;
 
-mongoose.connect(MONGO_URL, {
+mongoose.connect(NODE_ENV !== 'production' ? MONGO_URL : MONGO_URL_PROD, {
   useNewUrlParser: true,
 });
 
