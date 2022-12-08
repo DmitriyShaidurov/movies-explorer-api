@@ -46,12 +46,7 @@ mongoose.connect(MONGO_URL, {
 app.use(cookieParser());
 app.use(requestLogger);
 
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
-app.use(router);//
+app.use(router);
 app.use((req, res, next) => {
   next(new NotFoundError('Страница не найдена'));
 });
