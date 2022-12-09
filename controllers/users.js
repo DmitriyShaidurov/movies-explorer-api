@@ -48,6 +48,9 @@ const createUser = (req, res, next) => {
       });
   });
 };
+
+//  В момент ревью на сервере закончились средства, поэтому https и не работал...
+
 const updateUser = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { name: req.body.name, email: req.body.email }, { new: true, runValidators: true }).orFail(new NotFoundError('Пользователь с указанным _id не найден.'))
     .then((user) => res.status(200).send(user))

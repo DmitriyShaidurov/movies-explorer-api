@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const path = require('node:path');
+// const path = require('node:path');
 const cors = require('cors');
 const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundError = require('./errors/notFoundErr');
 const router = require('./routes/index');
+const { limiter } = require('./utils/limiter');
 
 const { NODE_ENV, MONGO_URL_PROD } = process.env;
 const { MONGO_URL, allowedCors } = require('./utils/const');
@@ -17,8 +18,6 @@ const app = express();
 app.use(express.json());
 
 app.use(cors());
-
-app.use(express.json());
 
 app.use((req, res, next) => {
   const { origin } = req.headers;
@@ -47,6 +46,7 @@ mongoose.connect(NODE_ENV !== 'production' ? MONGO_URL : MONGO_URL_PROD, {
 
 app.use(cookieParser());
 app.use(requestLogger);
+app.use(limiter);
 
 app.use(router);
 app.use((req, res, next) => {
@@ -54,7 +54,7 @@ app.use((req, res, next) => {
 });
 
 app.use(errorLogger);
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 app.use(errors());
 
 app.use((err, req, res, next) => {
