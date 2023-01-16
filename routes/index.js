@@ -20,10 +20,10 @@ const validateSignin = celebrate({
   }),
 });
 
-router.post('/api/signin', validateSignin, login);
-router.post('/api/signup', validateUserSignup, createUser);
+router.post('/signin', validateSignin, login);
+router.post('/signup', validateUserSignup, createUser);
 router.use(auth);
-router.use('/api/', routesUser);
-router.use('/api/', routesMovie);
+router.use('/', routesUser);
+router.use('/', routesMovie);
 
 module.exports = router;
